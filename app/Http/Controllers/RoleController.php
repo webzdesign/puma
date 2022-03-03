@@ -44,20 +44,19 @@ class RoleController extends Controller
                 $action = "";
 
                 if (auth()->user()->hasPermission('edit.roles')) {
-                    $action .=  "<a href='" . $editUrl . "' class='btn btn-sm btn-success'><i class='fas fa-pencil-alt'></i> Edit</a>";
+                    $action .=  "<a href='" . $editUrl . "' class='btn btn-xs btn-sm btn-success'><i class='fas fa-pencil-alt'></i> Edit</a>";
                 }
                 if (auth()->user()->hasPermission('activeinactive.roles')) {
                     if ($role->status == '0') {
-                        $action .= " <a id='activate' href='" . $activeUrl . "' class='btn btn-sm btn-success activeUser'><i class='fa fa-check'></i> Activate</a>";
+                        $action .= " <a id='activate' href='" . $activeUrl . "' class='btn btn-xs btn-sm btn-success activeUser'><i class='fa fa-check'></i> Activate</a>";
                     } else {
-                        $action .= " <a id='deactivate' href='" . $deactiveUrl . "' class='btn btn-sm btn-danger inactiveUser'><i class='fa fa-times'></i> Deactivate</a>";
+                        $action .= " <a id='deactivate' href='" . $deactiveUrl . "' class='btn btn-xs btn-sm btn-danger inactiveUser'><i class='fa fa-times'></i> Deactivate</a>";
                     }
                 }
 
                 // if (auth()->user()->hasPermission('delete.roles')) {
-                //     $action .= " <a id='delete' href='$deleteUrl' class='btn btn-sm btn-danger deleteUser'><i class='fa fa-trash'></i> Delete</a>";
+                //     $action .= " <a id='delete' href='$deleteUrl' class='btn btn-xs btn-sm btn-danger deleteUser'><i class='fa fa-trash'></i> Delete</a>";
                 // }
-
                 return $action;
             })
             ->rawColumns(['action'])

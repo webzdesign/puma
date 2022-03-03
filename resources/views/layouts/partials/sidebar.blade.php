@@ -61,6 +61,12 @@
                     </ul>
                 </li>
 
+                <li class="nav-item">
+                    <a href="{{ route('category') }}" class="nav-link {{ Request::is('category') || Request::is('category/*') ? 'active' : '' }}">
+                        <i class="ion ion-bag nav-icon"></i>
+                        <p>Category</p>
+                    </a>
+                </li>
 {{--
                 <li class="nav-item">
                     <a href="#" class="nav-link {{ Request::is('#') || Request::is('#/*') ? 'active' : '' }}">
