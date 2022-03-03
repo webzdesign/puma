@@ -56,7 +56,7 @@
                         </b>
 
                         <p>
-                            This otp will expire in 60 minutes.
+                            This otp will expire in 5 minutes.
 
                         </p>
                     </div>

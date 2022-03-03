@@ -16,7 +16,7 @@ class LoginController extends Controller
 {
     public $route = 'login';
     public $view = 'login';
-    public $moduleName = 'login';
+    public $moduleName = 'Login';
 
     /**
      * Create a new controller instance.
@@ -30,7 +30,8 @@ class LoginController extends Controller
 
     public function showLoginForm()
     {
-        return view('auth.login');
+        $moduleName = $this->moduleName;
+        return view('auth.login',compact('moduleName'));
     }
 
 
@@ -46,9 +47,9 @@ class LoginController extends Controller
             $data['email'] = $user->email;
             $data['otp'] = $newOtp;
 
-            Mail::to($request->email)->send(new MailOtp($data));
+            // Mail::to($request->email)->send(new MailOtp($data));
 
-            User::where('email', $request->email)->update(['otp' => $newOtp, 'otp_verified' => '0']);
+            User::where('email', $request->email)->update(['otp' => $newOtp, 'otp_expire' => date('Y-m-d h:i:s', strtotime('now'))]);
             return redirect('verifyOtp/' . encrypt($user->id));
         }
         return back()->withErrors(['email' => 'The provided credentials do not match our records.',]);
@@ -62,17 +63,26 @@ class LoginController extends Controller
     public function checkOtp(Request $request, $id)
     {
         $id = decrypt($id);
-        $email = User::find($id)->email;
-        $otp = User::find($id)->otp;
+        $user = User::where('id',$id)->first();
+        $email = $user->email;
+        $otp = $user->otp;
 
         if ($email && $otp) {
-            if ((int)($request->otp) === $otp) {
-                $otpStatus = User::find($id)->update(['otp_verified' => '1']);
-                Auth::loginUsingId($id, true);
-                return redirect()->intended('dashboard');
-            } else {
-                $otpStatus = User::find($id)->update(['otp_verified' => '0']);
-                return back()->withErrors(['otp' => 'Wrong OTP ! Try Again.',]);
+            $otpExpire = strtotime($user->otp_expire);
+            $expired = $otpExpire + (60 * 5); //5 min
+            $now = strtotime('now');
+
+            if ($now < $expired) {
+                if ((int)($request->otp) === $otp) {
+                    $update = User::where('id', $id)->update(['otp' => null, 'otp_expire' => null]);
+                    Auth::loginUsingId($id, true);
+                    return redirect()->intended('home');
+                } else {
+                    return back()->withErrors(['otp' => 'Wrong OTP ! Try Again.',]);
+                }
+            }else{
+                $update = User::where('id', $id)->update(['otp' => null, 'otp_expire' => null]);
+                return redirect(route('login'))->with(['expired' => 'Your Otp Is Expired ! Resend Again',]);
             }
         } else {
             return redirect()->back()->withErrors(['otp' => 'Something Went Wrong !! Try Again',]);

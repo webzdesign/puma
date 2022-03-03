@@ -21,7 +21,7 @@
         width: 100%;
         height: 100%;
         z-index: 9999;
-        //background: url({{ asset('public/assets/img/loader.gif') }}) 50% 50% no-repeat rgb(249, 249, 249);
+        {{--  background: url({{ asset('public/assets/img/loader.gif') }}) 50% 50% no-repeat rgb(249, 249, 249);  --}}
         background: #fff no-repeat right top;
         background-size: 100% 100%;
         {{--  opacity: .8;  --}}
@@ -48,7 +48,7 @@
 
 
 <body class="hold-transition sidebar-mini layout-fixed">
-    <div id="preloaders" class="preloader"></div>
+    {{--  <div id="preloaders" class="preloader"></div>  --}}
     <div class="wrapper">
 
         {{-- header --}}

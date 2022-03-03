@@ -2,7 +2,8 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="{{ route('home') }}" class="brand-link">
-        <img src="{{ public_path('assets/img/noimage.jpg') }}" alt="Site Logo" style="width:50px;height:50px;border-radius:10px;">
+        <img src="{{ asset('public/assets/img/noimage.jpg') }}" alt="Site Logo"
+            style="width:50px;height:50px;border-radius:10px;">
         <span class="brand-text font-weight-light">{{ config('app.name') }}</span>
     </a>
     <!-- Sidebar -->
@@ -36,12 +37,30 @@
                         <p>About</p>
                     </a>
                 </li>
-
-                <li class="nav-item">
-                    <a href="{{ route('user') }}" class="nav-link {{ Request::is('#') || Request::is('#/*') ? 'active' : '' }}">
-                        <i class="fa fa-user nav-icon"></i>
-                        <p>Users</p>
+                <li class="nav-item has-treeview {{ Request::is('user') || Request::is('user/*') || Request::is('role') || Request::is('role/*')? 'menu-open': '' }}">
+                    <a href="#"
+                        class="nav-link {{ Request::is('user') || Request::is('user/*') || Request::is('role') || Request::is('role/*')? 'active': '' }}">
+                        <i class="fas fa-users nav-icon"></i>
+                        <p> Users
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
                     </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('user') }}"
+                                class="nav-link {{ Request::is('user') || Request::is('user/*') ? 'active' : '' }}">
+                                <i class="far fa-circle nav-icon pl-2"></i>
+                                <p>User Details</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('role') }}"
+                                class="nav-link {{ Request::is('role') || Request::is('role/*') ? 'active' : '' }}">
+                                <i class="far fa-circle nav-icon pl-2"></i>
+                                <p>Roles/Permission</p>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
 
             </ul>

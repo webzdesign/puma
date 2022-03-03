@@ -1,0 +1,199 @@
+@extends('layouts.app')
+
+@section('moduleName', "$moduleName Add")
+
+@section('content')
+
+    <div class="row">
+        <div class="col-12 col-lg order-1 order-lg-0">
+            <div class="card mb-5">
+                <div class="card-header">
+                    <h3 class="card-title">{{ $moduleName }} Create</h3>
+                    <div class="card-tools">
+                    </div>
+                </div>
+                <div class="card-body table-responsive">
+                    <form action="{{ route('role.store') }}" method="POST" enctype="multipart/form-data" id="form">
+                        @csrf()
+                        <div class="row g-3">
+
+                            <div class="col-md-4 mb-3 col-sm-12">
+                                <label class="form-label">Name <span class="requride_cls">*</span></label>
+                                <input type="text" class="form-control" name="name" placeholder="Name"
+                                    value="{{ old('name') }}" />
+                                @error('name')
+                                    <span class="error">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+
+                            <div class="col-md-4 mb-3 col-sm-12">
+                                <label class="form-label">Is Active <span class="requride_cls">*</span></label>
+                                <div class="d-flex d-inline">
+                                    <div class="form-check m-1">
+                                        <input type="radio" class="form-check-input" id="active" name="is_active" value="1"
+                                            checked />
+                                        <label for="active">Active</label>
+                                    </div>
+
+                                    <div class="form-check m-1">
+                                        <input type="radio" class="form-check-input" id="in_active" name="is_active"
+                                            value="0" />
+                                        <label for="in_active">In Active</label>
+                                    </div>
+                                </div>
+
+                                @error('is_active')
+                                    <span class="error">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-8 mb-3 col-sm-12">
+                                    <label for="description">Description </label></label>
+                                    <textarea id="description" name="description" class="form-control"
+                                        placeholder="Ex : User Role" style="resize:none;"
+                                        rows="3">{{ old('description') }}</textarea>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-12 mb-3 col-sm-12">
+                            <label class="form-label">Permissions :</label>
+                            <div class="col-lg-12 permission-card">
+                                @php
+                                    $cnt = 1;
+                                    $cn = 1;
+                                @endphp
+                                @foreach ($permissions as $k => $permission)
+                                    @if ($cnt % 3 == 1)
+                                        <div class="row">
+                                    @endif
+                                    <div class="col-lg-4 col-sm-4 mb-3 permission-listing">
+                                        <div class="permission-card-header p-1 bg-dark text-center">
+                                            <b>{{ $k }}</b>
+                                        </div>
+                                        <div class="text-center">
+
+                                            <a class="pull-right permission-card-title selectDeselect" value="select"
+                                                style="cursor: pointer;color:rgb(24, 84, 213);">Select All</a>
+                                            <a class="pull-right permission-card-title selectDeselect"
+                                                value="select">&nbsp;|&nbsp;</a>
+                                            <a class="pull-right permission-card-title selectDeselect" value="deselect"
+                                                style="cursor: pointer;color:rgb(24, 84, 213);">Deselect All</a>
+
+                                        </div>
+
+                                        @foreach ($permission as $key => $val)
+                                            <div class="custom-control custom-checkbox mt-2">
+                                                <input class="custom-control-input permission form-check-input"
+                                                    type="checkbox" id="customCheckbox{{ $cn }}"
+                                                    name="permission[]" value="{{ $val->id }}">
+                                                <label for="customCheckbox{{ $cn }}"
+                                                    class="custom-control-label permision-label cursor-pointer">&nbsp;{{ $val->name }}</label>
+                                            </div>
+                                            @php $cn++; @endphp
+                                        @endforeach
+                                    </div>
+                                    @if ($cnt % 3 == 0)
+                            </div>
+                            <hr class="form-part">
+                            @endif
+                            @php $cnt++; @endphp
+                            @endforeach
+                        </div>
+                        <div class="row">
+                            <div id="messageBox" class="requride_cls"></div>
+                        </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="card-footer d-flex justify-content-center">
+            <button class="btn btn-icon btn-icon-end btn-primary m-1" type="submit">
+                Submit
+            </button>
+            <a href="{{ url()->previous() }}" class="btn btn-default m-1" onclick="history.back()">Cancel</a>
+        </div>
+
+        </form>
+    </div>
+    </div>
+    </div>
+
+
+@endsection
+
+@section('script')
+    <script>
+        $(document).ready(function() {
+
+            $('body').on('click', '.selectDeselect', function(e) {
+                var selectVal = $(this).attr('value');
+                if (selectVal == 'select') {
+                    $(this).closest('.permission-listing').find(".permission").prop("checked", true);
+                } else {
+                    $(this).closest('.permission-listing').find(".permission").prop("checked", false);
+                }
+            });
+
+
+            $('#form').validate({
+                rules: {
+                    name: {
+                        required: true,
+                    },
+                    role: {
+                        required: true,
+                    },
+                    description: {
+                        required: true,
+                    },
+                    "permission[]": {
+                        required: true,
+                        minlength: 1
+                    },
+                    is_active: {
+                        required: true,
+                    },
+                },
+                messages: {
+                    name: {
+                        required: "User Name Is Required.",
+                    },
+                    role: {
+                        required: "User Role Is Required.",
+                        remote: "User Role Limit Is Over."
+                    },
+                    description: {
+                        required: "Description Is Required.",
+                    },
+                    is_active: {
+                        required: "Status Is Required.",
+                    },
+                    "permission[]": "Please select at least one types of permission.",
+                },
+                errorPlacement: function(error, element) {
+                    if (element.attr("name") == "permission[]") {
+                        error.appendTo("#messageBox");
+                    } else {
+                        {{-- error.insertAfter(element) --}}
+                        error.css('color', 'red').appendTo(element.parent("div"));
+                    }
+                },
+                submitHandler: function(form) {
+                    form.submit();
+                    $(':input[type="submit"]').prop('disabled', true);
+                }
+            });
+
+
+        })
+    </script>
+@endsection

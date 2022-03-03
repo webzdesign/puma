@@ -71,14 +71,18 @@
             otp: {
                 required: true,
                 number: true,
+                rangelength: [6, 6]
             },
         },
         messages: {
             otp: {
                 required: "Otp Is Required.",
+                number: "Enter Valid Otp.",
+                rangelength: "Otp Is Only 6 character.",
             },
         },
         errorPlacement: function(error, element) {
+            element.parent('div').find('.invalid-feedback').hide();
             error.css('color', 'red').appendTo(element.parent("div").parent('div'));
         },
     });
