@@ -15,12 +15,17 @@ class AddColumsInUsersTable extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             //
-            $table->integer('role_id')->after('name');
+            $table->integer('role_id')->unsigned()->after('name');
             $table->integer('otp')->nullable()->after('email');
-            $table->timestamp('otp_expire')->nullable()->after('otp');
+            $table->dateTime('otp_expire')->nullable()->after('otp');
             $table->integer('status')->default(1)->comment("0=inactive , 1=active")->after('otp_expire');
             $table->integer('added_by')->nullable()->after('status');
             $table->integer('updated_by')->nullable()->after('added_by');
+
+            $table->foreign('role_id')
+            ->references('id')
+            ->on('roles')
+            ->onDelete('cascade');
         });
     }
 

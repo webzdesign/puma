@@ -42,7 +42,7 @@ Route::prefix('/')->middleware(['auth'])->group(function () {
         Route::get('/edit/{id}', [RoleController::class, 'edit'])->name('role.edit');//->middleware('permission:edit.roles');
         Route::put('update/{id}', [RoleController::class, 'update'])->name('role.update');
         Route::get('/delete/{id}', [RoleController::class, 'delete'])->name('role.delete');//->middleware('permission:destroy.roles');
-        Route::get('/activeinactive/{type}/{id}', [RoleController::class, 'activeinactive']);//->name('role.activeinactive')->middleware('permission:activeinactive.roles');
+        Route::get('/activeinactive/{type}/{id}', [RoleController::class, 'activeinactive'])->name('role.activeinactive');//->middleware('permission:activeinactive.roles');
         Route::get('/getRoleData', [RoleController::class, 'getRoleData'])->name('role.getRoleData');
         Route::post('/checkRole', [RoleController::class, 'checkRole'])->name('role.checkRole');
     });

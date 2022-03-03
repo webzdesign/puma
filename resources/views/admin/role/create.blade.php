@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('moduleName', "$moduleName Add")
+@section('moduleName', "$moduleName / Create")
 
 @section('content')
 
@@ -32,19 +32,19 @@
                                 <label class="form-label">Is Active <span class="requride_cls">*</span></label>
                                 <div class="d-flex d-inline">
                                     <div class="form-check m-1">
-                                        <input type="radio" class="form-check-input" id="active" name="is_active" value="1"
+                                        <input type="radio" class="form-check-input" id="active" name="status" value="1"
                                             checked />
                                         <label for="active">Active</label>
                                     </div>
 
                                     <div class="form-check m-1">
-                                        <input type="radio" class="form-check-input" id="in_active" name="is_active"
+                                        <input type="radio" class="form-check-input" id="in_active" name="status"
                                             value="0" />
                                         <label for="in_active">In Active</label>
                                     </div>
                                 </div>
 
-                                @error('is_active')
+                                @error('status')
                                     <span class="error">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -75,22 +75,24 @@
                                         <div class="row">
                                     @endif
                                     <div class="col-lg-4 col-sm-4 mb-3 permission-listing">
-                                        <div class="permission-card-header p-1 bg-dark text-center">
-                                            <b>{{ $k }}</b>
-                                        </div>
-                                        <div class="text-center">
+                                        <div class="card">
+                                            <div class="card-header permission-card-header text-center">
+                                                <h4>{{ $k }}</h4>
 
-                                            <a class="pull-right permission-card-title selectDeselect" value="select"
-                                                style="cursor: pointer;color:rgb(24, 84, 213);">Select All</a>
-                                            <a class="pull-right permission-card-title selectDeselect"
-                                                value="select">&nbsp;|&nbsp;</a>
-                                            <a class="pull-right permission-card-title selectDeselect" value="deselect"
-                                                style="cursor: pointer;color:rgb(24, 84, 213);">Deselect All</a>
 
-                                        </div>
+                                                <div class="text-center pl-2 pr-2">
+                                                    <a class="float-left permission-card-title selectDeselect"
+                                                        style="cursor: pointer;color:rgb(24, 84, 213);" value="deselect">Deselect
+                                                        All</a>
+                                                    <a class="float-right permission-card-title selectDeselect"
+                                                        style="cursor: pointer;color:rgb(24, 84, 213);" value="select">Select
+                                                        All</a>
+                                                </div>
+                                            </div>
+                                            <div class="card-body ml-3 mr-3">
 
                                         @foreach ($permission as $key => $val)
-                                            <div class="custom-control custom-checkbox mt-2">
+                                            <div class="custom-control custom-checkbox p-2">
                                                 <input class="custom-control-input permission form-check-input"
                                                     type="checkbox" id="customCheckbox{{ $cn }}"
                                                     name="permission[]" value="{{ $val->id }}">
@@ -99,6 +101,8 @@
                                             </div>
                                             @php $cn++; @endphp
                                         @endforeach
+                                    </div>
+                                    </div>
                                     </div>
                                     @if ($cnt % 3 == 0)
                             </div>
@@ -159,7 +163,7 @@
                         required: true,
                         minlength: 1
                     },
-                    is_active: {
+                    status: {
                         required: true,
                     },
                 },
@@ -174,7 +178,7 @@
                     description: {
                         required: "Description Is Required.",
                     },
-                    is_active: {
+                    status: {
                         required: "Status Is Required.",
                     },
                     "permission[]": "Please select at least one types of permission.",

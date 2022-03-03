@@ -1,6 +1,7 @@
 @extends('layouts.app')
-@section('content')
+@section('moduleName', "$moduleName / Edit")
 
+@section('content')
     <!-- Main content -->
     <section class="content">
 
@@ -55,17 +56,17 @@
                     <div class="form-group">
                         <div class="row">
                             <div class="col-sm-4">
-                                <label for="is_active">Status<span class="requride_cls">*</span></label>
+                                <label for="status">Status<span class="requride_cls">*</span></label>
                                 <div class="radio">
                                     <label class="first-label-radio"><input type="radio"
-                                            {{ old('is_active', $role['status']) == 1 ? 'checked' : '' }} name="is_active"
+                                            {{ old('status', $role['status']) == 1 ? 'checked' : '' }} name="status"
                                             id="active" value="1"> Active</label>
                                     <label><input type="radio"
-                                            {{ old('is_active', $role['status']) == 0 ? 'checked' : '' }} name="is_active"
+                                            {{ old('status', $role['status']) == 0 ? 'checked' : '' }} name="status"
                                             id="in_active" value="0"> In Active</label>
                                 </div>
-                                @if ($errors->has('is_active'))
-                                    <span class="requride_cls"><strong>{{ $errors->first('is_active') }}</strong></span>
+                                @if ($errors->has('status'))
+                                    <span class="requride_cls"><strong>{{ $errors->first('status') }}</strong></span>
                                 @endif
                             </div>
 
@@ -84,8 +85,9 @@
                                     <div class="row">
                                 @endif
                                 <div class="col-lg-4 col-sm-4 mb-3 permission-listing">
-                                    <div class="permission-card-header p-1 bg-dark text-center">
-                                        <b>{{ $k }}</b>
+                                    <div class="card">
+                                    <div class="card-header permission-card-header text-center">
+                                        <h4>{{ $k }}</h4>
 
 
                                         <div class="text-center pl-2 pr-2">
@@ -98,20 +100,23 @@
                                         </div>
                                     </div>
                                     <br>
-                                    @foreach ($permission as $key => $val)
-                                        @if (($val->name == 'Delete Technology' || $val->slug == 'destroy.technology') && $role->id == 2)
-                                        @else
-                                            <div class="custom-control custom-checkbox">
-                                                <input class="custom-control-input permission" type="checkbox"
-                                                    id="customCheckbox{{ $cn }}" name="permission[]"
-                                                    @if (in_array($val->id, $existPermissions)) checked @endif value="{{ $val->id }}">
+                                    <div class="card-body ml-3 mr-3">
+                                        @foreach ($permission as $key => $val)
+                                            @if (($val->name == 'Delete Technology' || $val->slug == 'destroy.technology') && $role->id == 2)
+                                            @else
+                                                <div class="custom-control custom-checkbox p-2">
+                                                    <input class="custom-control-input permission" type="checkbox"
+                                                        id="customCheckbox{{ $cn }}" name="permission[]"
+                                                        @if (in_array($val->id, $existPermissions)) checked @endif value="{{ $val->id }}">
 
-                                                <label for="customCheckbox{{ $cn }}"
-                                                    class="custom-control-label permision-label">{{ $val->name }}</label>
-                                            </div>
-                                            @php $cn++; @endphp
-                                        @endif
-                                    @endforeach
+                                                    <label for="customCheckbox{{ $cn }}"
+                                                        class="custom-control-label permision-label">{{ $val->name }}</label>
+                                                </div>
+                                                @php $cn++; @endphp
+                                            @endif
+                                        @endforeach
+                                    </div>
+                                    </div>
                                 </div>
                                 @if ($cnt % 3 == 0)
                         </div>
@@ -173,7 +178,7 @@
                             },
                         },
                     },
-                    is_active: {
+                    status: {
                         required: true,
                     },
                 },
@@ -182,7 +187,7 @@
                         required: "Role Name Is Required.",
                         remote: "Role Already Exist."
                     },
-                    is_active: {
+                    status: {
                         required: "Status Is Required.",
                     },
                 },
