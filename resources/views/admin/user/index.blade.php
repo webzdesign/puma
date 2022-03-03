@@ -43,6 +43,23 @@
 
 <script>
     $(document).ready(function(){
+
+        @if (Session::has('message'))
+            Swal.fire(
+            '{{ $moduleName }}',
+            '{!! session('message') !!}',
+            'success'
+            )
+        @endif
+
+        @if (Session::has('failmessage'))
+            Swal.fire(
+            '{{ $moduleName }}',
+            '{!! session('failmessage') !!}',
+            'error'
+            )
+        @endif
+
         var datatable = $('.datatable').DataTable({
             processing:true,
             serverSide:true,

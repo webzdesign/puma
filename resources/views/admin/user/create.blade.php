@@ -38,6 +38,9 @@
                                 <td>
                                     <select class="select2_single select2bs4 form-control" id="role_id" name="role_id">
                                         <option value="">Select</option>
+                                        @foreach ($roles as $role)
+                                            <option value="{{ $role->id }}">{{ $role->name }}</option>
+                                        @endforeach
                                     </select>
                                 </td>
                                 @error('role_id')
@@ -48,6 +51,15 @@
                             </div>
                         </div>
                         <div class="row g-3">
+                            <div class="col-md-4 mb-3 col-sm-12">
+                                <label class="form-label">Password <span class="requride_cls">*</span></label>
+                                <input type="password" class="form-control" name="password" placeholder="Password" />
+                                @error('password')
+                                    <span class="error">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
                             <div class="col-md-4 mb-3 col-sm-12">
                                 <label class="form-label">Status <span class="requride_cls">*</span></label>
                                 <div class="d-flex d-inline">
@@ -87,47 +99,55 @@
 @section('script')
 
 <script>
-    // $(document).ready(function() {
-    //     $("#form").validate({
-    //         rules: {
-    //             name: {
-    //                 required: true
-    //             },
-    //             email: {
-    //                 required: true,
-    //                 email: true
-    //             },
-    //             role_id: {
-    //                 required: true
-    //             },
-    //             is_active: {
-    //                 required: true
-    //             }
-    //         },
-    //         messages: {
-    //             name: {
-    //                 required: "User Name Is Required."
-    //             },
-    //             email: {
-    //                 required: "Email Is Required.",
-    //                 email: "Invald Email."
-    //             },
-    //             role_id: {
-    //                 required: "Role Is Required."
-    //             },
-    //             is_active: {
-    //                 required: "Status Is Required."
-    //             }
-    //         },
-    //         errorPlacement: function(error, element) {
-    //             error.css('color', 'red').appendTo(element.parent("div"));
-    //         },
-    //         submitHandler: function(form) {
-    //             form.submit();
-    //             $(':input[type="submit"]').prop('disabled', true);
-    //         }
-    //     });
-    // });
+    $(document).ready(function() {
+        $("#form").validate({
+            rules: {
+                name: {
+                    required: true
+                },
+                email: {
+                    required: true,
+                    email: true
+                },
+                password: {
+                    required: true,
+                    minlength: 6,
+                },
+                role_id: {
+                    required: true
+                },
+                is_active: {
+                    required: true
+                }
+            },
+            messages: {
+                name: {
+                    required: "User Name Is Required."
+                },
+                email: {
+                    required: "Email Is Required.",
+                    email: "Invald Email."
+                },
+                password: {
+                    required: "Password Is Required.",
+                    minlength: "Passwords Must Contain At Least Six Characters."
+                },
+                role_id: {
+                    required: "Role Is Required."
+                },
+                is_active: {
+                    required: "Status Is Required."
+                }
+            },
+            errorPlacement: function(error, element) {
+                error.css('color', 'red').appendTo(element.parent("div"));
+            },
+            submitHandler: function(form) {
+                form.submit();
+                $(':input[type="submit"]').prop('disabled', true);
+            }
+        });
+    });
 </script>
 
 @endsection

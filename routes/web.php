@@ -35,6 +35,11 @@ Route::prefix('/')->middleware(['auth'])->group(function () {
         Route::get('/getUserData', [UserController::class, 'getUserData'])->name('getUserData');
         Route::get('/create', [UserController::class, 'create'])->name('user.create');//->middleware('permission:create.users');
         Route::post('/store', [UserController::class, 'store'])->name('user.store');
+        Route::get('/view/{id}', [UserController::class, 'viewUser'])->name('user.view');//->middleware('permission:view.users');
+        Route::get('/edit/{id}', [UserController::class, 'edit'])->name('user.edit');//->middleware('permission:edit.users');
+        Route::put('/update/{id}', [UserController::class, 'updateUserData'])->name('user.update');
+        Route::get('/delete/{id}', [UserController::class, 'deleteUser'])->name('user.delete');//->middleware('permission:destroy.users');
+        Route::get('/activeInactive/{id}', [UserController::class, 'activeInactive'])->name('user.activeInactive');//->middleware('permission:activeinactive.users');
     });
 
 
