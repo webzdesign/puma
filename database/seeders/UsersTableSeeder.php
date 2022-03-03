@@ -23,7 +23,7 @@ class UsersTableSeeder extends Seeder
          */
         if (config('roles.models.defaultUser')::where('email', '=', 'admin@gmail.com')->first() === null) {
             $newUser = config('roles.models.defaultUser')::create([
-                'name'     => 'Admin',
+                'name'     => 'Super Admin',
                 'role_id'  => '1',
                 'email'    => 'admin@gmail.com',
                 'password' => bcrypt('123456'),

@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
@@ -19,10 +21,17 @@ Route::get('/', function () {
     return redirect()->route('login');
 });
 
-Auth::routes(['register'=>false]);
+Auth::routes();
+Route::get('/verifyOtp/{id}', [LoginController::class, 'verifyOtp'])->name('verifyOtp');
+Route::post('/checkOtp/{id}', [LoginController::class, 'checkOtp'])->name('checkOtp');
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::group(['prefix'=>'user'],function(){
-    Route::get('/', [UserController::class, 'index'])->name('user');
+
+Route::prefix('/')->middleware(['auth'])->group(function () {
+    Route::get('/home', [HomeController::class, 'index'])->name('home');
+
+    Route::group(['prefix'=>'user'],function(){
+        Route::get('/', [UserController::class, 'index'])->name('user');
+    });
 });

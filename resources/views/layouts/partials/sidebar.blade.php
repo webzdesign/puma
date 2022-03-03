@@ -2,7 +2,7 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="{{ route('home') }}" class="brand-link">
-        <img src="" alt="Site Logo" style="width:50px;height:50px;border-radius:10px;">
+        <img src="{{ public_path('assets/img/noimage.jpg') }}" alt="Site Logo" style="width:50px;height:50px;border-radius:10px;">
         <span class="brand-text font-weight-light">{{ config('app.name') }}</span>
     </a>
     <!-- Sidebar -->
@@ -24,7 +24,7 @@
 
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                 <li class="nav-item">
-                    <a href="{{ route('home') }}" class="nav-link {{ Request::is('admin/home') ? 'active' : '' }}">
+                    <a href="{{ route('home') }}" class="nav-link {{ Request::is('home') ? 'active' : '' }}">
                         <i class="fas fa-tachometer-alt nav-icon"></i>
                         <p>Dashboard</p>
                     </a>

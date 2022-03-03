@@ -25,7 +25,8 @@
         <div class="card card-outline card-primary">
             <div class="card-body register-card-body">
                 <form method="POST" action="{{ route('register') }}">
-                    <input type="hidden" name="_token" value="weub6Vq3XqYlPCmKJK2R1voRnZxvgCarss4pVFS7">
+                    @csrf
+
                     <div class="row mb-1">
                         <label for="name" class="col-md-12 col-form-label text-md-end">Name</label>
 

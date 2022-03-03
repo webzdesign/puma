@@ -6,6 +6,7 @@
 <title>{{ config('app.name') }}</title>
 
 <head>
+
     @include('layouts.partials.headerscript')
     <style>
         .logo-icon,
@@ -19,64 +20,68 @@
 <body class="login-page" style="min-height: 434.433px;">
     <div class="login-box">
         <div class="login-logo">
-            <a href="#" class="logo-icon"><b class='text-uppercase'>{{ __('Reset Password') }}</b></a>
+            <a href="#" class="logo-icon"><b class='text-uppercase'>{{ config('app.name') }} </b>ADMIN</a>
         </div>
 
         <div class="card card-outline card-info">
-
             <div class="card-body login-card-body">
 
+                <form method="POST" action="{{ route('checkOtp', $id) }}" id="form">
+                    @csrf
 
-                <div class="p-2">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
+                    <div class="row mb-3">
+                        <label for="otp" class="col-md-12 col-form-label text-md-end">{{ __('Verify Otp') }}</label>
 
-                    <form method="POST" action="{{ route('password.email') }}">
-                        @csrf
-
-                        <div class="row mb-3">
-                            <label for="email"
-                                class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
-
+                        <div class="col-md-12">
                             <div class="input-group mb-1">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
-                                    name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+                                <input id="otp" type="text" class="form-control @error('otp') is-invalid @enderror"
+                                    name="otp" value="{{ old('otp') }}" required autocomplete="otp" autofocus>
                                 <div class="input-group-append">
                                     <div class="input-group-text">
                                         <span class="fas fa-envelope"></span>
                                     </div>
                                 </div>
 
-                                @error('email')
+                                @error('otp')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
                             </div>
                         </div>
-
-                        <div class="row mb-0">
-                            <div class="col-mb-8 offset-1">
-                                <button type="submit" class="btn btn-primary">
-                                    Send Password Reset Link
-                                </button>
-                            </div>
-                            <div class="col-mb-2 offset-1">
-                                <a href="{{ route('login') }}" class="btn btn-primary text-light">
-                                    Login
-                                </a>
-                            </div>
+                    </div>
+                    <div class="row mb-0">
+                        <div class="col-md-6"></div>
+                        <div class="col-md-6">
+                            <button type="submit" class="btn btn-block btn-info">
+                                {{ __('Login') }}
+                            </button>
                         </div>
-                    </form>
-                </div>
+                    </div>
+                </form>
             </div>
-
         </div>
+    </div>
 </body>
-
 @include('layouts.partials.footerscript')
+
+<script>
+    $('#form').validate({
+        rules: {
+            otp: {
+                required: true,
+                number: true,
+            },
+        },
+        messages: {
+            otp: {
+                required: "Otp Is Required.",
+            },
+        },
+        errorPlacement: function(error, element) {
+            error.css('color', 'red').appendTo(element.parent("div").parent('div'));
+        },
+    });
+</script>
 
 </html>
