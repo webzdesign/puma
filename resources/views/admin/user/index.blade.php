@@ -4,11 +4,11 @@
     <section class="content">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">{{ $module }} Details</h3>
+                <h3 class="card-title">{{ $moduleName }} Details</h3>
                 <div class="card-tools">
                     <div class="btn-group">
                         @if (auth()->user()->hasPermission('create.users'))
-                            <a href="" class="btn btn-primary btn-sm"><i
+                            <a href="{{route('user.create')}}" class="btn btn-primary btn-sm"><i
                                 class="fa fa-plus"></i>
                             New</a>
                         @endif
@@ -21,7 +21,6 @@
                         <tr>
                             <th>Sr No.</th>
                             <th>Name</th>
-                            <th>Mobile No.</th>
                             <th>Email </th>
                             <th>Role </th>
                             <th>Action</th>
@@ -44,7 +43,41 @@
 
 <script>
     $(document).ready(function(){
-        
+        var datatable = $('.datatable').DataTable({
+            processing:true,
+            serverSide:true,
+            pageLength:50,
+            ajax: {
+                "url":"{{ route('getUserData') }}",
+                "dataType":"json",
+                "type":"GET",
+                "data":{
+                    is_active: function(){
+                        return $("#is_active").val();
+                    },
+                }
+            },
+            columns:[{
+                    data: 'DT_RowIndex',
+                    orderable: false,
+                    searchable: false,
+                },
+                {
+                    data: 'name'
+                },
+                {
+                    data: 'email'
+                },
+                {
+                    data: 'role.name'
+                },
+                {
+                    data: 'action',
+                    orderable: false,
+                    searchable: false
+                },
+            ],
+        });
     });
 </script>
 

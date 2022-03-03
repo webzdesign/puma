@@ -31,7 +31,10 @@ Route::prefix('/')->middleware(['auth'])->group(function () {
     Route::get('/home', [HomeController::class, 'index'])->name('home');
 
     Route::group(['prefix'=>'user'],function(){
-        Route::get('/', [UserController::class, 'index'])->name('user');
+        Route::get('/', [UserController::class, 'index'])->name('user');//->middleware('permission:view.users');
+        Route::get('/getUserData', [UserController::class, 'getUserData'])->name('getUserData');
+        Route::get('/create', [UserController::class, 'create'])->name('user.create');//->middleware('permission:create.users');
+        Route::post('/store', [UserController::class, 'store'])->name('user.store');
     });
 
 
