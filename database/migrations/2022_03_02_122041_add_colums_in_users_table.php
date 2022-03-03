@@ -15,8 +15,13 @@ class AddColumsInUsersTable extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             //
+            $table->integer('role_id')->after('name');
             $table->integer('otp')->nullable()->after('email');
             $table->integer('otp_verified')->nullable()->after('otp');
+            $table->timestamp('otp_expire')->nullable()->after('otp_verified');
+            $table->integer('status')->default(1)->comment("0=inactive , 1=active")->after('otp_expire');
+            $table->integer('added_by')->nullable()->after('status');
+            $table->integer('updated_by')->nullable()->after('added_by');
         });
     }
 
@@ -29,7 +34,7 @@ class AddColumsInUsersTable extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             //
-            $table->dropColumn(['otp','otp_verified']);
+            $table->dropColumn(['role_id'.'otp','otp_verified','otp_expire','status','added_by','updated_by']);
         });
     }
 }

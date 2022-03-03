@@ -37,6 +37,13 @@
                     </a>
                 </li>
 
+                <li class="nav-item">
+                    <a href="{{ route('user') }}" class="nav-link {{ Request::is('#') || Request::is('#/*') ? 'active' : '' }}">
+                        <i class="fa fa-user nav-icon"></i>
+                        <p>Users</p>
+                    </a>
+                </li>
+
             </ul>
         </nav>
         <!-- /.sidebar-menu -->
