@@ -46,7 +46,7 @@ class LoginController extends Controller
             $data['email'] = $user->email;
             $data['otp'] = $newOtp;
 
-            Mail::to($request->email)->send(new MailOtp($data));
+            // Mail::to($request->email)->send(new MailOtp($data));
 
             User::where('email', $request->email)->update(['otp' => $newOtp, 'otp_verified' => '0']);
             return redirect('verifyOtp/' . encrypt($user->id));
