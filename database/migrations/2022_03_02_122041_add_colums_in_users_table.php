@@ -19,12 +19,14 @@ class AddColumsInUsersTable extends Migration
             $table->integer('otp')->nullable()->after('email');
             $table->dateTime('otp_expire')->nullable()->after('otp');
             $table->integer('status')->default(1)->comment("0=inactive , 1=active")->after('otp_expire');
-            $table->integer('added_by')->nullable()->after('status');
-            $table->integer('updated_by')->nullable()->after('added_by');
+            $table->bigInteger('added_by')->nullable()->unsigned()->after('status');
+            $table->bigInteger('updated_by')->nullable()->unsigned()->after('added_by');
 
             $table->foreign('role_id')
             ->references('id')
             ->on('roles');
+            $table->foreign('added_by')->references('id')->on('users');
+            $table->foreign('updated_by')->references('id')->on('users');
         });
     }
 

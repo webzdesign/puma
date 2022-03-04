@@ -16,7 +16,16 @@
                 </div>
             </div>
             <div class="card-body  table-responsive">
-                <table class="datatable  table table-bordered table-hover">
+                <div class="form-group">
+                    <label><strong>Role :</strong></label>
+                    <select id='role_id' class="select2_single select2bs4 form-control" style="width: 20%;">
+                        <option value="">Select</option>
+                        @foreach ($roles as $role)
+                            <option value="{{ $role->id }}">{{ $role->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <table class="datatable  table table-bordered table-hover w-100">
                     <thead>
                         <tr>
                             <th>Sr No.</th>
@@ -72,6 +81,9 @@
                     is_active: function(){
                         return $("#is_active").val();
                     },
+                    role_id: function(){
+                        return $("#role_id").val();
+                    }
                 }
             },
             columns:[{
@@ -94,6 +106,10 @@
                     searchable: false
                 },
             ],
+        });
+
+        $('#role_id').change(function(){
+            datatable.draw();
         });
     });
 </script>
