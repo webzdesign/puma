@@ -82,11 +82,13 @@
 <script src="{{ asset('public/assets/plugins/filepond/filepond-plugin-image-crop.js') }}"></script>
 
 
-{{--  date time picker  --}}
+{{-- date time picker --}}
 <script src="{{ asset('public/assets/plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.min.js') }}"></script>
 
 <script>
     $(document).ready(function() {
+
+
         $('.filepond--credits').text('');
 
         $(".select2_single").select2({
@@ -102,20 +104,17 @@
             autoclose: true,
             dateFormat: 'dd-mm-yyyy'
         }).val();
-        //$('.ckeditor').ckeditor();
-{{--
-//        CKEDITOR.replace('wysiwyg-editor', {
-//          filebrowserUploadUrl: "{{route('ckeditor.image-upload', ['_token' => csrf_token() ])}}",
-//        filebrowserUploadMethod: 'form'
-//  });
---}}
+
+        jQuery.validator.addMethod("noSpace", function(value, element) {
+            return value.indexOf(" ") < 0 && value != "";
+        }, "No White space Allowed");
 
     });
-FilePond.registerPlugin(
-    FilePondPluginImagePreview,
-    FilePondPluginImageTransform,
-    FilePondPluginImageResize,
-    FilePondPluginImageCrop,
-    FilePondPluginFileValidateType,
-);
+    FilePond.registerPlugin(
+        FilePondPluginImagePreview,
+        FilePondPluginImageTransform,
+        FilePondPluginImageResize,
+        FilePondPluginImageCrop,
+        FilePondPluginFileValidateType,
+    );
 </script>

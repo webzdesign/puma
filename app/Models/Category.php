@@ -17,4 +17,9 @@ class Category extends Model
     public function UpdatedBy(){
         return $this->belongsTo(User::class, 'updated_by');
     }
+
+    public function role()
+    {
+        return $this->belongsToMany(Role::class, 'categories_roles');
+    }
 }

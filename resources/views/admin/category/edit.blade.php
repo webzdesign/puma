@@ -124,6 +124,7 @@
                     },
                     code: {
                         required: true,
+                        noSpace: true,
                         remote: {
                             type: 'POST',
                             url: "{{ route('category.checkCategoryCode') }}",
@@ -158,6 +159,12 @@
                 errorPlacement: function(error, element) {
                     error.css('color', 'red').appendTo(element.parent("div"));
                 },
+                highlight: function(element, errorClass, validClass) {
+                    $(element).addClass('is-invalid');
+                },
+                unhighlight: function(element, errorClass, validClass) {
+                    $(element).removeClass('is-invalid');
+                }
             });
 
         });

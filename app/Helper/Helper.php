@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Helpers;
+namespace App\Helper;
 
 use App\Models\Setting;
 
 class Helper
 {
+    // Type, ModuleName, Message 
     public static function successMsg($type, $moduleName, $msg = null)
-    /** Type, ModuleName, Message */
     {
         $msgType = "success";
         $moduleName == '' ? 'Data' : $moduleName;
@@ -19,7 +19,7 @@ class Helper
             $message = "$moduleName Delete Successfully !";
         } elseif ($type == 'complete') {
             $message = "$moduleName Completed Successfully !";
-        }elseif ($type == 'active') {
+        } elseif ($type == 'active') {
             $message = "$moduleName Activate Successfully !";
         } elseif ($type == 'in_active') {
             $message = "$moduleName In-Activate  Successfully !";
@@ -35,40 +35,44 @@ class Helper
             $message = "$moduleName Closed Successfully !";
         } elseif ($type == 'error') {
             $message = "$moduleName Something Went To wrong !";
-        }
-        else {
+        } else {
             $message = "$moduleName Successfully !";
         }
         session()->flash("message", $message);
     }
 
-        /** Custom Session Message */
-        public static function customMsg($msgType, $moduleName, $message)
-        {
+    // Custom Session Message
+    public static function customMsg($msgType, $moduleName, $message)
+    {
 
-            session()->flash("message", json_encode([
-                'msgType' => $msgType,
-                'message' => $message,
-                'moduleName' => $moduleName
-            ]));
+        session()->flash("message", json_encode([
+            'msgType' => $msgType,
+            'message' => $message,
+            'moduleName' => $moduleName
+        ]));
+    }
+
+    // Failar Setting  
+    public static function failarMsg($type, $msg)
+    {
+        if ($type == 'custom') {
+            Session()->flash('failmessage', $msg);
         }
+    }
 
+    // Site Setting  
+    public static function settings()
+    {
+        return Setting::first();
+    }
 
-    public static function failarMsg($type,$msg) {
-		if($type == 'custom') {
-			Session()->flash('failmessage', $msg);
-		}
-	}
-
-        /* Active Inactive Message */
-        public static function activeDeactiveMsg($type, $msg)
-        {
-            if ($type == 'active') {
-                Session()->flash('message', $msg . ' Active Successfully !');
-            } else {
-                Session()->flash('message', $msg . ' Deactive Successfully !');
-            }
+    //  Active Inactive Message 
+    public static function activeDeactiveMsg($type, $msg)
+    {
+        if ($type == 'active') {
+            Session()->flash('message', $msg . ' Active Successfully !');
+        } else {
+            Session()->flash('message', $msg . ' Deactive Successfully !');
         }
-
+    }
 }
-?>

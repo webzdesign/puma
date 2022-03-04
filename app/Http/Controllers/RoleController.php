@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Helpers\Helper;
+use App\Helper\Helper;
 use App\Models\Category;
 use App\Models\PermissionRole;
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use jeremykenedy\LaravelRoles\Models\Permission;
-use jeremykenedy\LaravelRoles\Models\Role;
+// use jeremykenedy\LaravelRoles\Models\Role;
 
 class RoleController extends Controller
 {
@@ -26,8 +27,8 @@ class RoleController extends Controller
     {
         $moduleName = $this->moduleName;
         $permissions = Permission::get()->groupBy('model');
-        $categories = Category::where('status',1)->get();
-        return view($this->view . '/create', compact('moduleName', 'permissions','categories'));
+        $categories = Category::where('status', 1)->get();
+        return view($this->view . '/create', compact('moduleName', 'permissions', 'categories'));
     }
 
     public function getRoleData()
@@ -44,15 +45,17 @@ class RoleController extends Controller
                 $deleteUrl = route('role.delete', encrypt($role->id));
 
                 $action = "";
+                if ($role->id != 1 && $role->id != 2) {
 
-                if (auth()->user()->hasPermission('edit.roles')) {
-                    $action .=  "<a href='" . $editUrl . "' class='btn btn-xs btn-sm btn-success'><i class='fas fa-pencil-alt'></i> Edit</a>";
-                }
-                if (auth()->user()->hasPermission('activeinactive.roles')) {
-                    if ($role->status == '0') {
-                        $action .= " <a id='activate' href='" . $activeUrl . "' class='btn btn-xs btn-sm btn-success activeUser'><i class='fa fa-check'></i> Activate</a>";
-                    } else {
-                        $action .= " <a id='deactivate' href='" . $deactiveUrl . "' class='btn btn-xs btn-sm btn-danger inactiveUser'><i class='fa fa-times'></i> Deactivate</a>";
+                    if (auth()->user()->hasPermission('edit.roles')) {
+                        $action .=  "<a href='" . $editUrl . "' class='btn btn-xs btn-sm btn-success'><i class='fas fa-pencil-alt'></i> Edit</a>";
+                    }
+                    if (auth()->user()->hasPermission('activeinactive.roles')) {
+                        if ($role->status == '0') {
+                            $action .= " <a id='activate' href='" . $activeUrl . "' class='btn btn-xs btn-sm btn-success activeUser'><i class='fa fa-check'></i> Activate</a>";
+                        } else {
+                            $action .= " <a id='deactivate' href='" . $deactiveUrl . "' class='btn btn-xs btn-sm btn-danger inactiveUser'><i class='fa fa-times'></i> Deactivate</a>";
+                        }
                     }
                 }
 
@@ -80,6 +83,8 @@ class RoleController extends Controller
 
         $role->attachPermission($request->permission);
 
+        $role->category()->attach($request->category_id);
+
         Helper::successMsg('insert', $this->moduleName);
         return redirect($this->route);
     }
@@ -87,13 +92,18 @@ class RoleController extends Controller
     public function edit($id)
     {
         $moduleName = $this->moduleName;
-        $role = Role::find(decrypt($id));
+        $role = Role::with(['category'])->find(decrypt($id));
         $permissions = Permission::get()->groupBy('model');
-        $categories = Category::where('status',1)->get();
+        $categories = Category::where('status', 1)->get();
+        $categoryId = array();
+
+        foreach ($role->category as $cat) {
+            array_push($categoryId, $cat->id);
+        }
 
         $existPermissions = PermissionRole::where('role_id', decrypt($id))->pluck('permission_id')->toArray();
 
-        return view($this->view . '/edit', compact('moduleName', 'role', 'permissions', 'existPermissions','categories'));
+        return view($this->view . '/edit', compact('moduleName', 'role', 'permissions', 'existPermissions', 'categories', 'categoryId'));
     }
 
     public function update(Request $request, $id)
@@ -106,12 +116,14 @@ class RoleController extends Controller
         $role->save();
 
         $role->syncPermissions($request->permission);
-        $users = User::where('role_id',$id)->get();
+        $role->category()->sync($request->category_id);
 
-        foreach($users as $user){
+        $users = User::where('role_id', $id)->get();
+
+        foreach ($users as $user) {
             $user->syncPermissions($request->permission);
         }
-   
+
         foreach ($users as $user) {
             $user->detachAllRoles();
             $user->attachRole($id);

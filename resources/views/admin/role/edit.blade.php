@@ -34,15 +34,13 @@
                                 @endif
                             </div>
 
-
-
                             <div class="col-md-4 mb-3 col-sm-12">
                                 <label for="category_id">Category <span class="requride_cls">*</span></label>
                                 <td>
                                     <select class="select2_single select2bs4 form-control" id="category_id"
                                         name="category_id[]" multiple>
                                         @foreach ($categories as $category)
-                                            <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                            <option value="{{ $category->id }}"  {{ in_array($category->id,$categoryId) ? 'selected' : '' }}>{{ $category->name }}</option>
                                         @endforeach
                                     </select>
                                 </td>
@@ -212,9 +210,13 @@
                 errorPlacement: function(error, element) {
                     error.css('color', 'red').appendTo(element.parent("div"));
                 },
-                submitHandler: function(form) {
-                    form.submit();
-                    $(':input[type="submit"]').prop('disabled', true);
+                highlight: function(element, errorClass, validClass) {
+                    if(element.type != 'checkbox'){
+                        $(element).addClass('is-invalid');
+                    }
+                },
+                unhighlight: function(element, errorClass, validClass) {
+                    $(element).removeClass('is-invalid');
                 }
             });
 

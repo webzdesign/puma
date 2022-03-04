@@ -7,7 +7,7 @@ use App\Models\User;
 use App\Models\Role;
 use App\Http\Requests\UserRequest;
 use Illuminate\Support\Facades\Hash;
-use App\Helpers\Helper;
+use App\Helper\Helper;
 
 class UserController extends Controller
 {

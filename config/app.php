@@ -194,6 +194,8 @@ return [
     'aliases' => [
 
         'DataTables' => Yajra\DataTables\Facades\DataTables::class,
+        'Helper'    => App\Helper\Helper::class,
+
 
         'App' => Illuminate\Support\Facades\App::class,
         'Arr' => Illuminate\Support\Arr::class,

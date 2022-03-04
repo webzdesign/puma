@@ -112,6 +112,7 @@
                     },
                     code: {
                         required: true,
+                        noSpace: true,
                         remote: {
                             type: 'POST',
                             url: "{{ route('category.checkCategoryCode') }}",
@@ -149,9 +150,11 @@
                         error.css('color', 'red').appendTo(element.parent("div"));
                     }
                 },
-                submitHandler: function(form) {
-                    form.submit();
-                    $(':input[type="submit"]').prop('disabled', true);
+                highlight: function(element, errorClass, validClass) {
+                        $(element).addClass('is-invalid');
+                },
+                unhighlight: function(element, errorClass, validClass) {
+                    $(element).removeClass('is-invalid');
                 }
             });
 

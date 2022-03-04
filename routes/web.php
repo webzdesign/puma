@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\SettingController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
@@ -31,6 +32,7 @@ Route::post('/checkOtp/{id}', [LoginController::class, 'checkOtp'])->name('check
 Route::prefix('/')->middleware(['auth', 'CheckRoleStatus'])->group(function () {
     Route::get('/home', [HomeController::class, 'index'])->name('home');
 
+    /* Routes For User */
     Route::group(['prefix' => 'user'], function () {
         Route::get('/', [UserController::class, 'index'])->name('user'); //->middleware('permission:view.users');
         Route::get('/getUserData', [UserController::class, 'getUserData'])->name('getUserData');
@@ -43,15 +45,15 @@ Route::prefix('/')->middleware(['auth', 'CheckRoleStatus'])->group(function () {
         Route::get('/activeInactive/{id}', [UserController::class, 'activeInactive'])->name('user.activeInactive'); //->middleware('permission:activeinactive.users');
     });
 
-
+    /* Routes For Role */
     Route::group(['prefix' => 'role'], function () {
-        Route::get('/', [RoleController::class, 'index'])->name('role'); //->middleware('permission:view.roles');
-        Route::get('/create', [RoleController::class, 'create'])->name('role.create'); //->middleware('permission:create.roles');
+        Route::get('/', [RoleController::class, 'index'])->name('role')->middleware('permission:view.roles');
+        Route::get('/create', [RoleController::class, 'create'])->name('role.create')->middleware('permission:create.roles');
         Route::post('/store', [RoleController::class, 'store'])->name('role.store');
-        Route::get('/edit/{id}', [RoleController::class, 'edit'])->name('role.edit'); //->middleware('permission:edit.roles');
+        Route::get('/edit/{id}', [RoleController::class, 'edit'])->name('role.edit')->middleware('permission:edit.roles');
         Route::put('/update/{id}', [RoleController::class, 'update'])->name('role.update');
-        Route::get('/delete/{id}', [RoleController::class, 'delete'])->name('role.delete'); //->middleware('permission:delete.roles');
-        Route::get('/activeinactive/{type}/{id}', [RoleController::class, 'activeinactive'])->name('role.activeinactive'); //->middleware('permission:activeinactive.roles');
+        Route::get('/delete/{id}', [RoleController::class, 'delete'])->name('role.delete')->middleware('permission:delete.roles');
+        Route::get('/activeinactive/{type}/{id}', [RoleController::class, 'activeinactive'])->name('role.activeinactive')->middleware('permission:activeinactive.roles');
         Route::get('/getRoleData', [RoleController::class, 'getRoleData'])->name('role.getRoleData');
         Route::post('/checkRole', [RoleController::class, 'checkRole'])->name('role.checkRole');
     });
@@ -68,5 +70,11 @@ Route::prefix('/')->middleware(['auth', 'CheckRoleStatus'])->group(function () {
         Route::get('/getCategoryData', [CategoryController::class, 'getCategoryData'])->name('category.getCategoryData')->middleware('permission:view.category');
         Route::post('/checkCategoryName', [CategoryController::class, 'checkCategoryName'])->name('category.checkCategoryName')->middleware('permission:view.category');
         Route::post('/checkCategoryCode', [CategoryController::class, 'checkCategoryCode'])->name('category.checkCategoryCode')->middleware('permission:view.category');
+    });
+
+    /* Routes For Setting */
+    Route::group(['prefix' => 'settings'], function () {
+        Route::get('/', [SettingController::class, 'index'])->name('settings');
+        Route::post('/update', [SettingController::class, 'update'])->name('settings.update');
     });
 });

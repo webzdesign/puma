@@ -90,62 +90,66 @@
                                     $cn = 1;
                                 @endphp
                                 @foreach ($permissions as $k => $permission)
-                                    @if ($cnt % 3 == 1)
+                                    @if ($k == 'Role')
+                                        @continue
+                                    @else
+                                        @if ($cnt % 3 == 1)
                                         <div class="row">
-                                    @endif
-                                    <div class="col-lg-4 col-sm-4 mb-3 permission-listing">
-                                        <div class="card">
-                                            <div class="card-header permission-card-header text-center">
-                                                <h4>{{ $k }}</h4>
+                                        @endif
+                                            <div class="col-lg-4 col-sm-4 mb-3 permission-listing">
+                                                <div class="card">
+                                                    <div class="card-header permission-card-header text-center">
+                                                        <h4>{{ $k }}</h4>
 
 
-                                                <div class="text-center pl-2 pr-2">
-                                                    <a class="float-left permission-card-title selectDeselect"
-                                                        style="cursor: pointer;color:rgb(24, 84, 213);"
-                                                        value="select">Select
-                                                        All</a>
-                                                    <a class="float-right permission-card-title selectDeselect"
-                                                        style="cursor: pointer;color:rgb(24, 84, 213);"
-                                                        value="deselect">Deselect
-                                                        All</a>
+                                                        <div class="text-center pl-2 pr-2">
+                                                            <a class="float-left permission-card-title selectDeselect"
+                                                                style="cursor: pointer;color:rgb(24, 84, 213);"
+                                                                value="select">Select
+                                                                All</a>
+                                                            <a class="float-right permission-card-title selectDeselect"
+                                                                style="cursor: pointer;color:rgb(24, 84, 213);"
+                                                                value="deselect">Deselect
+                                                                All</a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card-body ml-3 mr-3">
+
+                                                        @foreach ($permission as $key => $val)
+                                                            <div class="custom-control custom-checkbox p-2">
+                                                                <input class="custom-control-input permission form-check-input"
+                                                                    type="checkbox" id="customCheckbox{{ $cn }}"
+                                                                    name="permission[]" value="{{ $val->id }}">
+                                                                <label for="customCheckbox{{ $cn }}"
+                                                                    class="custom-control-label permision-label cursor-pointer">&nbsp;{{ $val->name }}</label>
+                                                            </div>
+                                                            @php $cn++; @endphp
+                                                        @endforeach
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div class="card-body ml-3 mr-3">
-
-                                                @foreach ($permission as $key => $val)
-                                                    <div class="custom-control custom-checkbox p-2">
-                                                        <input class="custom-control-input permission form-check-input"
-                                                            type="checkbox" id="customCheckbox{{ $cn }}"
-                                                            name="permission[]" value="{{ $val->id }}">
-                                                        <label for="customCheckbox{{ $cn }}"
-                                                            class="custom-control-label permision-label cursor-pointer">&nbsp;{{ $val->name }}</label>
-                                                    </div>
-                                                    @php $cn++; @endphp
-                                                @endforeach
-                                            </div>
+                                        @if ($cnt % 3 == 0)
                                         </div>
-                                    </div>
-                                    @if ($cnt % 3 == 0)
+                                        <hr class="form-part">
+                                        @endif
+                                     @php $cnt++; @endphp
+                                    @endif
+                                @endforeach
                             </div>
-                            <hr class="form-part">
-                            @endif
-                            @php $cnt++; @endphp
-                            @endforeach
-                        </div>
                         <div class="row">
                             <div id="messageBox" class="requride_cls"></div>
                         </div>
                 </div>
             </div>
+            <div class="card-footer d-flex justify-content-center">
+                <button class="btn btn-icon btn-icon-end btn-primary m-1" type="submit">
+                    Submit
+                </button>
+                <a href="{{ url()->previous() }}" class="btn btn-default m-1" onclick="history.back()">Cancel</a>
+            </div>
 
         </div>
 
-        <div class="card-footer d-flex justify-content-center">
-            <button class="btn btn-icon btn-icon-end btn-primary m-1" type="submit">
-                Submit
-            </button>
-            <a href="{{ url()->previous() }}" class="btn btn-default m-1" onclick="history.back()">Cancel</a>
-        </div>
 
         </form>
     </div>
@@ -187,6 +191,9 @@
                     description: {
                         required: true,
                     },
+                    "category_id[]": {
+                        required: true,
+                    },
                     "permission[]": {
                         required: true,
                         minlength: 1
@@ -200,6 +207,9 @@
                         required: "Role Name Is Required.",
                         remote: "Role Already Exist."
 
+                    },
+                    "category_id[]": {
+                        required: "Please select at least one Category.",
                     },
                     description: {
                         required: "Description Is Required.",
@@ -217,9 +227,13 @@
                         error.css('color', 'red').appendTo(element.parent("div"));
                     }
                 },
-                submitHandler: function(form) {
-                    form.submit();
-                    $(':input[type="submit"]').prop('disabled', true);
+                highlight: function(element, errorClass, validClass) {
+                    if(element.type != 'checkbox'){
+                        $(element).addClass('is-invalid');
+                    }
+                },
+                unhighlight: function(element, errorClass, validClass) {
+                    $(element).removeClass('is-invalid');
                 }
             });
 
