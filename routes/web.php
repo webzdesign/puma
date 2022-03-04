@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\HomeController;
@@ -78,3 +79,13 @@ Route::prefix('/')->middleware(['auth', 'CheckRoleStatus'])->group(function () {
         Route::post('/update', [SettingController::class, 'update'])->name('settings.update');
     });
 });
+
+
+
+
+// Route for view/blade file.
+Route::get('importExportView', [ArticleController::class, 'importExportView'])->name('importExportView');
+// Route for export/download tabledata to .csv, .xls or .xlsx
+Route::get('exportExcel/{type}', [ArticleController::class, 'exportExcel'])->name('exportExcel');
+// Route for import excel data to database.
+Route::post('importExcel', [ArticleController::class, 'importExcel'])->name('importExcel');

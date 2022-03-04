@@ -168,6 +168,7 @@ return [
          * Package Service Providers...
          */
         Yajra\DataTables\DataTablesServiceProvider::class,
+        Maatwebsite\Excel\ExcelServiceProvider::class,
         /*
          * Application Service Providers...
          */
@@ -195,7 +196,7 @@ return [
 
         'DataTables' => Yajra\DataTables\Facades\DataTables::class,
         'Helper'    => App\Helper\Helper::class,
-
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
 
         'App' => Illuminate\Support\Facades\App::class,
         'Arr' => Illuminate\Support\Arr::class,
