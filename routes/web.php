@@ -40,10 +40,11 @@ Route::prefix('/')->middleware(['auth', 'CheckRoleStatus'])->group(function () {
         Route::get('/create', [UserController::class, 'create'])->name('user.create')->middleware('permission:create.users');
         Route::post('/store', [UserController::class, 'store'])->name('user.store');
         Route::get('/view/{id}', [UserController::class, 'view'])->name('user.view')->middleware('permission:view.users');
-        Route::get('/edit/{id}', [UserController::class, 'edit'])->name('user.edit'); //->middleware('permission:edit.users');
+        Route::get('/edit/{id}', [UserController::class, 'edit'])->name('user.edit')->middleware('permission:edit.users');
         Route::put('/update/{id}', [UserController::class, 'update'])->name('user.update');
         Route::get('/delete/{id}', [UserController::class, 'delete'])->name('user.delete')->middleware('permission:delete.users');
         Route::get('/activeInactive/{id}', [UserController::class, 'activeInactive'])->name('user.activeInactive')->middleware('permission:activeinactive.users');
+        Route::post('/checkEmail', [UserController::class, 'checkEmail'])->name('user.checkEmail');
     });
 
     /* Routes For Role */

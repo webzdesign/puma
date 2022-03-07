@@ -33,8 +33,7 @@
                     </a>
                 </li>
 
-                @permission('view.users')
-                <li class="nav-item has-treeview {{ Request::is('user') || Request::is('user/*') || Request::is('role') || Request::is('role/*')? 'menu-open': '' }}">
+                
                 @permission('view.category')
                     <li class="nav-item">
                         <a href="{{ route('category') }}"
@@ -45,9 +44,8 @@
                     </li>
                 @endpermission
 
-
-                <li
-                    class="nav-item has-treeview {{ Request::is('user') || Request::is('user/*') || Request::is('role') || Request::is('role/*')? 'menu-open': '' }}">
+                @permission('view.users')
+                <li class="nav-item has-treeview {{ Request::is('user') || Request::is('user/*') || Request::is('role') || Request::is('role/*')? 'menu-open': '' }}">
                     <a href="#"
                         class="nav-link {{ Request::is('user') || Request::is('user/*') || Request::is('role') || Request::is('role/*') ? 'active' : '' }}">
                         <i class="fas fa-users nav-icon"></i>
@@ -76,7 +74,7 @@
                         @endpermission
                     </ul>
                 </li>
-
+                @endpermission
 
 
                 <li class="nav-item">

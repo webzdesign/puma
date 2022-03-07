@@ -118,7 +118,19 @@
             },
             email: {
                 required: true,
-                email: true
+                email: true,
+                remote: {
+                    type: 'POST',
+                    url: "{{ route('user.checkEmail') }}",
+                    data: {
+                        email: function() {
+                            return $("#email").val();
+                        },
+                        id: function() {
+                            return $("#id").val();
+                        },
+                    },
+                },
             },
             password: {
                 required: true,
@@ -137,7 +149,8 @@
             },
             email: {
                 required: "Email Is Required.",
-                email: "Invald Email."
+                email: "Invald Email.",
+                remote: "Email Already Exist."
             },
             password: {
                 required: "Password Is Required.",

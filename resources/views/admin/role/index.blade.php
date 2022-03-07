@@ -19,7 +19,7 @@
                 </div>
             </div>
             <div class="card-body table-responsive">
-                <table class="datatable table table-bordered table-hover">
+                <table class="datatable table table-bordered table-hover w-100">
                     <thead>
                         <tr>
                             <th>Sr No.</th>
@@ -55,24 +55,6 @@
 @section('script')
     <script>
         $(document).ready(function() {
-
-            @if (Session::has('message'))
-                Swal.fire(
-                '{{ $moduleName }}',
-                '{!! session('message') !!}',
-                'success'
-                )
-            @endif
-
-            @if (Session::has('failmessage'))
-                Swal.fire(
-                '{{ $moduleName }}',
-                '{!! session('failmessage') !!}',
-                'error'
-                )
-            @endif
-
-
 
             var datatable = $('.datatable').DataTable({
                 processing: true,

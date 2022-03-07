@@ -98,14 +98,7 @@
 @section('script')
     <script>
         $(document).ready(function() {
-            @if (Session::has('message'))
-                Swal.fire(
-                '{{ $moduleName }}',
-                '{!! session('message') !!}',
-                'success'
-                )
-            @endif
-            $('#newLogo').hide();
+            
             $('#newFavicon').hide();
 
             function loadImg(input) {

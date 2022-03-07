@@ -82,11 +82,10 @@
                             </div>
                         </div>
 
-                        <center class="mt-4">
+                        <div class="card-footer d-flex justify-content-center">
                             <button class="btn btn-icon btn-icon-end btn-primary m-1" type="submit">Submit</button>
-                            {{-- <input type="submit" class="btn btn-icon btn-icon-end btn-primary m-1" value="Submit" /> --}}
                             <a href="{{ url()->previous() }}" class="btn btn-default m-1" onclick="history.back()">Cancel</a>
-                        </center>
+                        </div>
                     </form>
                 </div>
                 
@@ -107,7 +106,19 @@
                 },
                 email: {
                     required: true,
-                    email: true
+                    email: true,
+                    remote: {
+                        type: 'POST',
+                        url: "{{ route('user.checkEmail') }}",
+                        data: {
+                            email: function() {
+                                return $("#email").val();
+                            },
+                            id: function() {
+                                return $("#id").val();
+                            },
+                        },
+                    },
                 },
                 password: {
                     required: true,
@@ -126,7 +137,8 @@
                 },
                 email: {
                     required: "Email Is Required.",
-                    email: "Invald Email."
+                    email: "Invald Email.",
+                    remote: "Email Already Exist."
                 },
                 password: {
                     required: "Password Is Required.",
