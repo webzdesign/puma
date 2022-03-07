@@ -48,7 +48,7 @@
                                         <div class="form-group"><br>
                                             @if ($setting)
                                                 <input type="hidden" name="old_logo" value="{{ $setting->logo }}">
-                                                <img src="{{ asset(file_exists('storage/app/logo/' . $setting->logo) ? 'storage/app/logo/' . $setting->logo : 'public/assets/img/noimage.jpg') }}"
+                                                <img src="{{ (file_exists('storage/app/logo/' . $setting->logo) && $setting->logo != null) ? asset('storage/app/logo/' . $setting->logo) : asset('public/assets/img/noimage.jpg') }}"
                                                     style="width:50px;height:50px;border-radius:10px;">
                                             @endif
                                             <img style="width:50px;height:50px;" id="newLogo">
@@ -71,7 +71,7 @@
                                         <div class="form-group"><br>
                                             @if ($setting)
                                                 <input type="hidden" name="old_favicon" value="{{ $setting->favicon }}">
-                                                <img src="{{ asset(file_exists('storage/app/favicon/' . $setting->favicon)? 'storage/app/favicon/' . $setting->favicon : 'public/assets/img/noimage.jpg') }}"
+                                                <img src="{{ (file_exists('storage/app/favicon/' . $setting->favicon) && $setting->favicon != null) ? asset('storage/app/favicon/' . $setting->favicon) : asset('public/assets/img/noimage.jpg') }}"
                                                     style="width:50px;height:50px;border-radius:10px;">
                                             @endif
                                             <img style="width:50px;height:50px;" id="newFavicon">

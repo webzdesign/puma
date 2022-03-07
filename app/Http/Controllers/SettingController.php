@@ -57,7 +57,7 @@ class SettingController extends Controller
         Session::forget('title');
         $setting = Setting::first();
         Session()->put('logo', $setting->logo);
-        Session()->put('title', $setting->title);
+        Session()->put('title', $setting->name);
         Session()->put('favicon', $setting->favicon);
         return back();
     }
