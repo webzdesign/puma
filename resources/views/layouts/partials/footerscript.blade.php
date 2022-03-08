@@ -85,9 +85,31 @@
 {{-- date time picker --}}
 <script src="{{ asset('public/assets/plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.min.js') }}"></script>
 
+<meta name="csrf-token" content="{{ csrf_token() }}">
 <script>
     $(document).ready(function() {
 
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        @if (Session::has('message'))
+            Swal.fire(
+            '{{ $moduleName }}',
+            '{!! session('message') !!}',
+            'success'
+            )
+        @endif
+
+        @if (Session::has('failmessage'))
+            Swal.fire(
+            '{{ $moduleName }}',
+            '{!! session('failmessage') !!}',
+            'error'
+            )
+        @endif
 
         $('.filepond--credits').text('');
 

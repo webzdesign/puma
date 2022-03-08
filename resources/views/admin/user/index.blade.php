@@ -3,7 +3,43 @@
 {{Config::set('subtitle','User')}}
 
 
-<section class="content">
+
+    <!-- Content Header (Page header) -->
+    <div class="container-fluid">
+        <div class="row mb-2">
+        <div class="col-sm-6">
+        <button type="button" class="btn btn-info filter-btn btn-sm" data-toggle="collapse" data-target="#filterBody"><i class="fa fa-filter"></i> Filters</button>
+        </div>
+        </div>
+    </div>
+    <!-- /.container-fluid -->
+    <section class="content collapse show" id="filterBody">
+        <div class="card">
+            <div class="card-body">
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-4 col-sm-4 col-xs-12">
+                        <label><strong>Role</strong></label><br>
+                        <select id='role_id' class="select2_single select2bs4 form-control">
+                            <option value="">Select</option>
+                            @foreach ($roles as $role)
+                                <option value="{{ $role->id }}">{{ $role->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 col-sm-4 col-xs-12" style="margin-top:2.4%">
+                        <button type="submit" class="btn btn-success searchData btn-sm">Apply Filters</button>
+                        <button class="btn btn-danger searchClear btn-sm" data-toggle="collapse" data-target="#filterBody">Cancel</button>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="content">
         <div class="card">
             <div class="card-header">
                 <h3 class="card-title">{{ $moduleName }} Details</h3>
@@ -18,15 +54,6 @@
                 </div>
             </div>
             <div class="card-body  table-responsive">
-                <div class="form-group">
-                    <label><strong>Role :</strong></label>
-                    <select id='role_id' class="select2_single select2bs4 form-control" style="width: 20%;">
-                        <option value="">Select</option>
-                        @foreach ($roles as $role)
-                            <option value="{{ $role->id }}">{{ $role->name }}</option>
-                        @endforeach
-                    </select>
-                </div>
                 <table class="datatable  table table-bordered table-hover w-100">
                     <thead>
                         <tr>
@@ -42,7 +69,6 @@
                 </table>
             </div>
             <div class="card-footer">
-
             </div>
         </div>
     </section>
@@ -54,22 +80,6 @@
 
 <script>
     $(document).ready(function(){
-
-        @if (Session::has('message'))
-            Swal.fire(
-            '{{ $moduleName }}',
-            '{!! session('message') !!}',
-            'success'
-            )
-        @endif
-
-        @if (Session::has('failmessage'))
-            Swal.fire(
-            '{{ $moduleName }}',
-            '{!! session('failmessage') !!}',
-            'error'
-            )
-        @endif
 
         var datatable = $('.datatable').DataTable({
             processing:true,
@@ -110,9 +120,18 @@
             ],
         });
 
-        $('#role_id').change(function(){
+        $('.searchData').on('click', function(e) {
+            e.preventDefault();
             datatable.draw();
         });
+
+        $('.searchClear').on('click', function(e) {
+            e.preventDefault();
+            $('body').find('#role_id').val('').trigger('change');
+
+            datatable.draw();
+        });
+
     });
 </script>
 

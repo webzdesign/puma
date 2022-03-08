@@ -50,7 +50,7 @@ class UserController extends Controller
                 }
             }
             if (auth()->user()->hasPermission('delete.users')) {
-                $actions .= " <a id='deleteuser' href='" . $deleteUrl . "' class='btn btn-danger btn-xs'><i class='fas fa-trash'></i> Delete</a>";
+                $actions .= " <a id='deleteuser' href='" . $deleteUrl . "' class='btn btn-danger btn-xs delete'><i class='fas fa-trash'></i> Delete</a>";
             }
             if (auth()->user()->hasPermission('view.users')) {
                 $actions .= " <a href='" . $viewUrl . "' class='btn btn-info btn-xs'><i class='fas fa-eye'></i> View</a>";
@@ -76,6 +76,21 @@ class UserController extends Controller
         $moduleName = $this->moduleName;
         $roles = Role::active()->get();
         return view($this->view.'/create',compact('moduleName', 'roles'));
+    }
+
+    public function checkEmail(Request $request)
+    {
+        if (!isset($request->id)) {
+            $checkEmail = User::where('email', trim($request->email))->count();
+        } else {
+            $checkEmail = User::where('email', trim($request->email))->where('id', '!=', $request->id)->count();
+        }
+
+        if ($checkEmail > 0) {
+            echo json_encode(false);
+        } else {
+            echo json_encode(true);
+        }
     }
 
     public function store(UserRequest $request)
