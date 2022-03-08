@@ -2,6 +2,8 @@
 @section('moduleName', "$moduleName / Edit")
 
 @section('content')
+{{Config::set('subtitle','Edit '.$moduleName)}}
+
     <section class="content">
 
         <div class="card">
@@ -145,8 +147,8 @@
                 },
                 messages: {
                     name: {
-                        required: "Role Name Is Required.",
-                        remote: "Role Already Exist."
+                        required: "Category Name Is Required.",
+                        remote: "Category Already Exist."
                     },
                     code: {
                         required: "Code Is Required.",

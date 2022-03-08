@@ -3,6 +3,7 @@
 @section('moduleName', "$moduleName / Create")
 
 @section('content')
+{{Config::set('subtitle','Create '.$moduleName)}}
 
     <div class="row">
         <div class="col-12 col-lg order-1 order-lg-0">

@@ -51,7 +51,7 @@ class SettingController extends Controller
         } else {
             $faviconName = $request->old_favicon;
         }
-        Setting::updateOrCreate(['id' => 1], ['name' => trim(strtoupper($request->title)), 'logo' => ($logoName == '') ? '' : $logoName, 'favicon' => ($faviconName == null) ? '' : $faviconName]);
+        Setting::updateOrCreate(['id' => 1], ['name' => ucfirst(trim(strtolower($request->title))), 'logo' => ($logoName == '') ? '' : $logoName, 'favicon' => ($faviconName == null) ? '' : $faviconName]);
         Helper::successMsg('update', $this->moduleName);
 
         Session::forget('title');

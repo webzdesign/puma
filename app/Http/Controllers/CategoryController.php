@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Helper\Helper;
+use App\Http\Requests\CategoryRequest;
 use App\Models\Category;
 use Illuminate\Http\Request;
 
@@ -72,7 +73,7 @@ class CategoryController extends Controller
         return $datatable;
     }
 
-    public function store(Request $request)
+    public function store(CategoryRequest $request)
     {
 
         $category = Category::create([
@@ -98,7 +99,7 @@ class CategoryController extends Controller
         return view($this->view . '/edit', compact('moduleName', 'category', 'route'));
     }
 
-    public function update(Request $request, $id)
+    public function update(CategoryRequest $request, $id)
     {
         $category               = Category::find($id);
         $category->name         =  trim($request->name);

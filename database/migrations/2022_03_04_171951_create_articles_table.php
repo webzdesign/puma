@@ -33,7 +33,7 @@ class CreateArticlesTable extends Migration
             $table->string('product_type');//closed shoe , slip on , slide ,mule , sandal,slipper,flip flop
             $table->integer('final_MRP');
             $table->string('final_gender');
-            $table->string('Global KI')->nullable();
+            $table->string('global_ki')->nullable();
             $table->string('marketing_tier')->nullable();
             $table->string('channel-aw22');//comman ,offline,online,ecom
             $table->string('line');

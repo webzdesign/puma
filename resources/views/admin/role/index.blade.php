@@ -1,5 +1,7 @@
 @extends('layouts.app')
 @section('content')
+{{Config::set('subtitle','Role')}}
+
     <!-- Main content -->
     <section class="content">
 

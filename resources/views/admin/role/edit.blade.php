@@ -2,6 +2,7 @@
 @section('moduleName', "$moduleName / Edit")
 
 @section('content')
+{{Config::set('subtitle','Edit '.$moduleName)}}
     <!-- Main content -->
     <section class="content">
 

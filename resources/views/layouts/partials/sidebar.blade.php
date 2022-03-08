@@ -3,7 +3,7 @@
     <!-- Brand Logo -->
     <a href="{{ route('home') }}" class="brand-link">
         <img src="{{ asset((Helper::settings()->logo) ? 'storage/app/logo/' . Helper::settings()->logo : 'public/assets/img/noimage.jpg') }}"
-            alt="Site Logo" style="margin:0px 10px;max-width:60px;max-height:60px;border-radius:10px;">
+            alt="Site Logo" style="width:60px;height:60px;border-radius:10px;max-width: 100%;max-height: 100%;">
         <span
             class="ml-2 brand-text font-weight-light">{{ Helper::settings() == null ? 'PUMA' : Helper::settings()->name }}</span>
     </a>
@@ -78,7 +78,7 @@
 
 
                 <li class="nav-item">
-                    <a href="#" class="nav-link {{ Request::is('#') || Request::is('#/*') ? 'active' : '' }}">
+                    <a href="{{ url('importExportView') }}" class="nav-link {{ Request::is('#') || Request::is('#/*') ? 'active' : '' }}">
                         <i class="fa fa-edit nav-icon"></i>
                         <p>Articles</p>
                     </a>

@@ -1,5 +1,6 @@
 @extends('layouts.app');
 @section('content')
+{{Config::set('subtitle','View User')}}
 
 <section class="content">
 <div class="card">

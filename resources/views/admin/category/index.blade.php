@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('content')
+{{Config::set('subtitle',$moduleName)}}
     <!-- Main content -->
     <section class="content">
         <!-- Default box -->

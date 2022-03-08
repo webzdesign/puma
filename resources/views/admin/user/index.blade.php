@@ -1,7 +1,9 @@
 @extends('layouts.app')
 @section('content')
+{{Config::set('subtitle','User')}}
 
-    <section class="content">
+
+<section class="content">
         <div class="card">
             <div class="card-header">
                 <h3 class="card-title">{{ $moduleName }} Details</h3>

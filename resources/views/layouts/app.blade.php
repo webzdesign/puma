@@ -7,7 +7,7 @@
 <meta name="csrf-token" content="{{ csrf_token() }}">
 
 
-<title>{{ config('app.name') }} - {{ config('subtitle','WEB') }}</title>
+<title>{{ Helper::settings()->name ?? config('app.name') }} - {{ config('subtitle','Web') }}</title>
 
 <link rel="icon" href="{{ asset(Helper::settings() ? 'storage/app/favicon/' . Helper::settings()->favicon : 'public/assets/img/noimage.jpg') }}" type="image/png">
 @include('layouts.partials.headerscript')

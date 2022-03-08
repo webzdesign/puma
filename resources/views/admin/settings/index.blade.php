@@ -1,10 +1,9 @@
 @extends('layouts.app')
 
-
-
 @section('content')
-    <!-- Main content -->
+{{Config::set('subtitle','Settings')}}
 
+<!-- Main content -->
     <section>
         <div class="container-fluid">
             <div class="row">

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Helper\Helper;
+use App\Http\Requests\RoleRequest;
 use App\Models\Category;
 use App\Models\PermissionRole;
 use App\Models\Role;
@@ -71,9 +72,8 @@ class RoleController extends Controller
         return $datatable;
     }
 
-    public function store(Request $request)
+    public function store(RoleRequest $request)
     {
-
         $role = Role::create([
             'name'          => trim($request->name),
             'slug'          => str_slug($request->name),
@@ -106,7 +106,7 @@ class RoleController extends Controller
         return view($this->view . '/edit', compact('moduleName', 'role', 'permissions', 'existPermissions', 'categories', 'categoryId'));
     }
 
-    public function update(Request $request, $id)
+    public function update(RoleRequest $request, $id)
     {
         $role               = Role::find($id);
         $role->name         =  trim($request->name);

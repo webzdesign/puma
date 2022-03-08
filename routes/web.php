@@ -83,9 +83,8 @@ Route::prefix('/')->middleware(['auth', 'CheckRoleStatus'])->group(function () {
 
 
 
-// Route for view/blade file.
-Route::get('importExportView', [ArticleController::class, 'importExportView'])->name('importExportView');
-// Route for export/download tabledata to .csv, .xls or .xlsx
-Route::get('exportExcel/{type}', [ArticleController::class, 'exportExcel'])->name('exportExcel');
-// Route for import excel data to database.
-Route::post('importExcel', [ArticleController::class, 'importExcel'])->name('importExcel');
+Route::get('importExportView', [ArticleController::class,'importExportView']);
+
+Route::get('export', [ArticleController::class,'export'])->name('export');
+
+Route::post('import', [ArticleController::class,'import'])->name('import');
