@@ -78,11 +78,20 @@
 
 
                 <li class="nav-item">
-                    <a href="{{ url('importExportView') }}" class="nav-link {{ Request::is('#') || Request::is('#/*') ? 'active' : '' }}">
+                    <a href="{{ url('importExportView') }}" class="nav-link {{ Request::is('importExportView') || Request::is('importExportView/*') ? 'active' : '' }}">
                         <i class="fa fa-edit nav-icon"></i>
                         <p>Articles</p>
                     </a>
                 </li>
+
+                @permission('view.customerGroup')
+                <li class="nav-item">
+                    <a href="{{ url('customerGroup') }}" class="nav-link {{ Request::is('customerGroup') || Request::is('customerGroup/*') ? 'active' : '' }}">
+                        <i class="fa fa-object-group nav-icon"></i>
+                        <p>Customer Group</p>
+                    </a>
+                </li>
+                @endpermission
 
                 <li class="nav-item">
                     <a href="{{ route('settings') }}"

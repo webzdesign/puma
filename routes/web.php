@@ -9,6 +9,7 @@ use App\Http\Controllers\SettingController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\CustomerGroupController;
 
 /*
 |--------------------------------------------------------------------------
@@ -79,6 +80,20 @@ Route::prefix('/')->middleware(['auth', 'CheckRoleStatus'])->group(function () {
         Route::get('/', [SettingController::class, 'index'])->name('settings');
         Route::post('/update', [SettingController::class, 'update'])->name('settings.update');
     });
+
+    /** Routes For customer group */
+    Route::group(['prefix' => 'customerGroup'], function () {
+        Route::get('/', [CustomerGroupController::class, 'index'])->name('customerGroup')->middleware('permission:view.customerGroup');
+        Route::get('/create', [CustomerGroupController::class, 'create'])->name('customerGroup.create')->middleware('permission:create.customerGroup');
+        Route::post('/store', [CustomerGroupController::class, 'store'])->name('customerGroup.store')->middleware('permission:create.customerGroup');
+        Route::get('/edit/{id}', [CustomerGroupController::class, 'edit'])->name('customerGroup.edit')->middleware('permission:edit.customerGroup');
+        Route::put('/update/{id}', [CustomerGroupController::class, 'update'])->name('customerGroup.update')->middleware('permission:edit.customerGroup');
+        Route::get('/delete/{id}', [CustomerGroupController::class, 'delete'])->name('customerGroup.delete')->middleware('permission:delete.customerGroup');
+        Route::get('/activeinactive/{type}/{id}', [CustomerGroupController::class, 'activeinactive'])->name('customerGroup.activeinactive')->middleware('permission:activeinactive.customerGroup');
+        Route::get('/getCustomerGroupData', [CustomerGroupController::class, 'getCustomerGroupData'])->name('customerGroup.getCustomerGroupData')->middleware('permission:view.customerGroup');
+        Route::post('/checkCustomerGroupName', [CustomerGroupController::class, 'checkCustomerGroupName'])->name('customerGroup.checkCustomerGroupName')->middleware('permission:view.customerGroup');
+    });
+
 });
 
 

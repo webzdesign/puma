@@ -106,5 +106,52 @@ class PermissionsTableSeeder extends Seeder
             ]);
         }
         /* permission for Category module end */
+
+        /* permission for Customer Group module start */
+        if (Permission::where('name', '=', 'Create Customer Group')->first() === null) {
+            Permission::create([
+                'name' => 'Create Customer Group',
+                'slug' => 'create.customerGroup',
+                'description' => 'Can Add Customer Group',
+                'model' => 'Customer Group',
+            ]);
+        }
+
+        if (Permission::where('name', '=', 'View Customer Group')->first() === null) {
+            Permission::create([
+                'name' => 'View Customer Group',
+                'slug' => 'view.customerGroup',
+                'description' => 'Can view Customer Group',
+                'model' => 'Customer Group'
+            ]);
+        }
+
+        if (Permission::where('name', '=', 'Edit Customer Group')->first() === null) {
+            Permission::create([
+                'name' => 'Edit Customer Group',
+                'slug' => 'edit.customerGroup',
+                'description' => 'Can edit Customer Group',
+                'model' => 'Customer Group',
+            ]);
+        }
+
+        if (Permission::where('name', '=', 'Active/Inactive Customer Group')->first() === null) {
+            Permission::create([
+                'name' => 'Active/Inactive Customer Group',
+                'slug' => 'activeinactive.customerGroup',
+                'description' => 'Can Activate or deactivate Customer Group',
+                'model' => 'Customer Group',
+            ]);
+        }
+
+        if (Permission::where('name', '=', 'Delete Customer Group')->first() === null) {
+            Permission::create([
+                'name' => 'Delete Customer Group',
+                'slug' => 'delete.customerGroup',
+                'description' => 'Can Delete Customer Group',
+                'model' => 'Customer Group',
+            ]);
+        }
+        /* permission for Customer Group module end */
     }
 }

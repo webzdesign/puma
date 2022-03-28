@@ -18,7 +18,7 @@ class ConnectRelationshipsSeeder extends Seeder
         /* Find Role User And Permission */
         $adminRole = Role::where('name', '=', 'Super Admin')->first();
         $adminUser = User::find(1);
-        $permissions = Permission::whereIn('slug', ['view.users','create.users','edit.users','activeinactive.users','delete.users','view.roles','create.roles','edit.roles','activeinactive.roles','delete.roles','view.category','create.category','edit.category','activeinactive.category','delete.category'])->get();
+        $permissions = Permission::whereIn('slug', ['view.users','create.users','edit.users','activeinactive.users','delete.users','view.roles','create.roles','edit.roles','activeinactive.roles','delete.roles','view.category','create.category','edit.category','activeinactive.category','delete.category','view.customerGroup','create.customerGroup','edit.customerGroup','activeinactive.customerGroup','delete.customerGroup'])->get();
 
         /* attach Super admin Role */
         $adminUser->attachRole($adminRole);
